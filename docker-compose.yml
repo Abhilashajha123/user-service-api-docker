@@ -1,0 +1,26 @@
+
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Abhishek@767
+      MYSQL_DATABASE: user_db
+    ports:
+      - "3307:3306"  # Host:Container
+    networks:
+      - springboot-mysql-net
+
+  springboot-app:
+    build: .
+    container_name: springboot-app
+    depends_on:
+      - mysql-db
+    ports:
+      - "8085:8081"  # Host:Container
+    networks:
+      - springboot-mysql-net
+
+networks:
+  springboot-mysql-net:
